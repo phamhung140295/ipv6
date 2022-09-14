@@ -7,7 +7,7 @@ IP4=$(curl -4 -s icanhazip.com)
 IP6=2a09:7c41
 IP6_2=1cc4
 FIRST_PORT=10000
-LAST_PORT=20000
+LAST_PORT=10100
 
 
 gen64() {
