@@ -73,17 +73,6 @@ $(awk -F "/" '{print $3 ":" $4 ":" $1 ":" $2 }' ${WORKDATA})
 EOF
 }
 
-upload_proxy() {
-    cd $WORKDIR
-    local PASS=$(random)
-    zip --password $PASS proxy.zip proxy.txt
-    URL=$(curl -F "file=@proxy.zip" https://file.io)
-
-    echo "Proxy is ready! Format IP:PORT:LOGIN:PASS"
-    echo "Download zip archive from: ${URL}"
-    echo "Password: ${PASS}"
-
-}
 gen_data() {
     seq $FIRST_PORT $LAST_PORT | while read port; do
         echo "$(random)/$(random)/$IP4/$port/$(gen64 $IP6 $LAST_IP6)"
@@ -141,4 +130,3 @@ bash /etc/rc.local
 
 gen_proxy_file_for_user
 
-upload_proxy
