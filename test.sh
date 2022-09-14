@@ -1,4 +1,8 @@
-
+#!/bin/sh
+random() {
+	tr </dev/urandom -dc A-Za-z0-9 | head -c5
+	echo
+}
 IP4=$(curl -4 -s icanhazip.com)
 IP6=2a09:7c41
 IP6_2=1cc4
