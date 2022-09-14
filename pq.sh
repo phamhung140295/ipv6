@@ -112,7 +112,7 @@ WORKDATA="${WORKDIR}/data.txt"
 mkdir $WORKDIR && cd $_
 
 IP4=$(curl -4 -s icanhazip.com)
-IP6=2a09:7c41:1cc4
+IP6=2a09:7c41:1cc0
 
 echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
