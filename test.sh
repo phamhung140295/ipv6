@@ -3,6 +3,7 @@ random() {
 	tr </dev/urandom -dc A-Za-z0-9 | head -c5
 	echo
 }
+array=(1 2 3 4 5 6 7 8 9 0 a b c d e f)
 IP4=$(curl -4 -s icanhazip.com)
 IP6=2a09:7c41
 LAST_IP6=1cc4
