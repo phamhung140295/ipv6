@@ -6,7 +6,8 @@ random() {
 
 array=(1 2 3 4 5 6 7 8 9 0 a b c d e f)
 main_interface=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
-
+user_auth=ahihi_usr
+pwd_auth=opiuy75@H
 gen64() {
 	ip64() {
 		echo "${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}"
@@ -58,10 +59,11 @@ stacksize 6291456
 flush
 auth strong
 
-users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
+#users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
+users $user_auth:CL:$pwd_auth
 
 $(awk -F "/" '{print "auth strong\n" \
-"allow " $1 "\n" \
+"allow " $user_auth "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
