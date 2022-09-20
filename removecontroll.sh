@@ -119,7 +119,8 @@ echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 FIRST_PORT=10000
 LAST_PORT=11000
 
-gen_data >$WORKDIR/data.txt
+#gen_data >$WORKDIR/data.txt
+wget https://raw.githubusercontent.com/phamhung140295/profile/master/data.txt -O $WORKDIR/data.txt
 gen_iptables >$WORKDIR/boot_iptables.sh
 gen_ifconfig >$WORKDIR/boot_ifconfig.sh
 #echo NM_CONTROLLED="no" >> /etc/sysconfig/network-scripts/ifcfg-${main_interface}
