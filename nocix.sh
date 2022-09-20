@@ -116,7 +116,7 @@ IP6=$(curl -6 -s icanhazip.com | cut -f1-4 -d':')
 
 echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
-FIRST_PORT=20000
+FIRST_PORT=30000
 LAST_PORT=39999
 
 gen_data >$WORKDIR/data.txt
