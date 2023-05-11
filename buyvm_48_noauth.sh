@@ -56,7 +56,7 @@ setgid 65535
 setuid 65535
 stacksize 6291456 
 flush
-users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
+
 $(awk -F "/" '{print "proxy -6 -n -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
@@ -102,7 +102,7 @@ IP6=$(curl -6 -s icanhazip.com | cut -f1-3 -d':')
 echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
 FIRST_PORT=10000
-LAST_PORT=20000
+LAST_PORT=15000
 
 gen_data >$WORKDIR/data.txt
 gen_iptables >$WORKDIR/boot_iptables.sh
