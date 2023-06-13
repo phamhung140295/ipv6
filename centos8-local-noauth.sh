@@ -95,7 +95,7 @@ echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir $WORKDIR && cd $_
-
+wget https://raw.githubusercontent.com/phamhung140295/ipv6/master/gen_proxy.sh -O $WORKDIR/gen_proxy.sh
 IP4=$(hostname -I | awk ' {print $1}')
 IP6=$(curl -6 -s icanhazip.com | cut -f1-4 -d':')
 
