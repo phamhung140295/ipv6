@@ -9,7 +9,7 @@ array=(1 2 3 4 5 6 7 8 9 0 a b c d e f)
 main_interface=$(ip route get 8.8.8.8 | awk -- '{printf $5}')
 
 gen48() {
-	ip48() {
+	ip64() {
 		echo "${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}${array[$RANDOM % 16]}"
 	}
 	echo "$1:$(ip64):$(ip64):$(ip64):$(ip64):$(ip64)"
