@@ -14,7 +14,7 @@ gen56() {
 	}
 	# Lấy 3 nhóm đầu, random nhóm thứ 4 trong phạm vi /56, random 4 nhóm cuối
 	prefix=$(echo $1 | cut -d':' -f1-3)
-	segment4=$((RANDOM % 256 + 17920))  # Tạo giá trị từ 4600 đến 46FF
+	segment4=$((RANDOM % 256 + 17920)) 
 	hex_segment4=$(printf "%x" $segment4)  # Chuyển số thành dạng hex
 	echo "$prefix:$hex_segment4:$(ip64):$(ip64):$(ip64):$(ip64)"
 }
