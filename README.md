@@ -8,3 +8,4 @@
 2. `bash <(curl -s "https://raw.githubusercontent.com/phamhung140295/ipv6/master/centos8-noauth.sh")`
 
 3. `bash <(curl -s "https://raw.githubusercontent.com/phamhung140295/ipv6/master/centos8-local-noauth.sh")`
+4. `bash <(curl -s "https://raw.githubusercontent.com/phamhung140295/ipv6/master/centos8-56.sh")`
