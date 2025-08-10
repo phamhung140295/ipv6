@@ -113,7 +113,17 @@ gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 cat >>/etc/rc.local <<EOF
 systemctl start NetworkManager.service
 # ifup ${main_interface}
-timeout 5 ping google.com
+main_interface=""
+while [ -z "$main_interface" ]; do
+  # Kiểm tra giao diện mạng chính
+  main_interface=$(ip route get 8.8.8.8 | awk '{print $5}')
+  
+  # Nếu chưa có giao diện, chờ và thử lại
+  if [ -z "$main_interface" ]; then
+    echo "Đang kiểm tra kết nối mạng..."
+    sleep 5
+  fi
+done
 bash ${WORKDIR}/gen_proxy.sh
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
