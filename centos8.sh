@@ -97,7 +97,7 @@ echo "working folder = /home/proxy-installer"
 WORKDIR="/home/proxy-installer"
 WORKDATA="${WORKDIR}/data.txt"
 mkdir $WORKDIR && cd $_
-
+wget https://raw.githubusercontent.com/phamhung140295/ipv6/master/gen_proxy_64.sh -O $WORKDIR/gen_proxy.sh
 IP4=$(curl -4 -s icanhazip.com)
 IP6=$(curl -6 -s icanhazip.com | cut -f1-4 -d':')
 
@@ -116,7 +116,15 @@ gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 
 cat >>/etc/rc.local <<EOF
 systemctl start NetworkManager.service
-# ifup ${main_interface}
+ip_address=""
+while [ -z "\$ip_address" ]; do
+  ip_address=\$(curl -4 -s icanhazip.com)
+  if [ -z "\$ip_address" ]; then
+    echo "Đang kiểm tra kết nối mạng..."
+    sleep 5
+  fi
+done
+bash ${WORKDIR}/gen_proxy.sh
 bash ${WORKDIR}/boot_iptables.sh
 bash ${WORKDIR}/boot_ifconfig.sh
 ulimit -n 65535
