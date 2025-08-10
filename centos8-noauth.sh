@@ -112,30 +112,20 @@ gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 
 cat >> /etc/rc.local <<EOF
 systemctl start NetworkManager.service
-
-# Kiểm tra kết nối internet và lấy địa chỉ IP v4 công cộng
 ip_address=""
 while [ -z "\$ip_address" ]; do
-  # Sử dụng curl để lấy địa chỉ IP v4 công cộng
   ip_address=\$(curl -4 -s icanhazip.com)
-
-  # Nếu chưa có IP, chờ và thử lại
   if [ -z "\$ip_address" ]; then
     echo "Đang kiểm tra kết nối mạng..."
     sleep 5
   fi
 done
-
-echo "Địa chỉ IP v4 công cộng của bạn là: \$ip_address"
-
-# Tiến hành các bước tiếp theo sau khi kết nối ổn định
-bash \${WORKDIR}/gen_proxy.sh
-bash \${WORKDIR}/boot_iptables.sh
-bash \${WORKDIR}/boot_ifconfig.sh
+bash ${WORKDIR}/gen_proxy.sh
+bash ${WORKDIR}/boot_iptables.sh
+bash ${WORKDIR}/boot_ifconfig.sh
 ulimit -n 65535
 /usr/local/etc/3proxy/bin/3proxy /usr/local/etc/3proxy/3proxy.cfg &
 EOF
-
 
 bash /etc/rc.local
 
