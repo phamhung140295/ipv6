@@ -13,6 +13,22 @@ gen64() {
 	}
 	echo "$1:$(ip64):$(ip64):$(ip64):$(ip64)"
 }
+
+gen_data() {
+    awk -v ip4="$IP4" -v ip6="$IP6" -v start="$FIRST_PORT" -v end="$LAST_PORT" '
+    BEGIN {
+        srand();            # seed random
+        for(p = start; p <= end; p++) {
+            h1 = int(rand()*65536);
+            h2 = int(rand()*65536);
+            h3 = int(rand()*65536);
+            h4 = int(rand()*65536);
+            # mỗi %04x là 4 hex digit, in thường
+            printf "%s/%d/%s:%04x:%04x:%04x:%04x\n", ip4, p, ip6, h1, h2, h3, h4;
+        }
+    }'
+}
+
 install_3proxy() {
     echo "installing 3proxy"
     mkdir -p /3proxy
@@ -69,12 +85,6 @@ gen_proxy_file_for_user() {
     cat >proxy.txt <<EOF
 $(awk -F "/" '{print $3 ":" $4 ":" $1 ":" $2 }' ${WORKDATA})
 EOF
-}
-
-gen_data() {
-    seq $FIRST_PORT $LAST_PORT | while read port; do
-        echo "$IP4/$port/$(gen64 $IP6)"
-    done
 }
 
 gen_iptables() {
