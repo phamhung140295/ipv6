@@ -16,9 +16,18 @@ gen64() {
 }
 
 gen_data() {
-    seq $FIRST_PORT $LAST_PORT | while read port; do
-        echo "$(random)/$(random)/$IP4/$port/$(gen64 $IP6)"
-    done
+    awk -v ip4="$IP4" -v ip6="$IP6" -v start="$FIRST_PORT" -v end="$LAST_PORT" '
+    BEGIN {
+        srand();            # seed random
+        for(p = start; p <= end; p++) {
+            h1 = int(rand()*65536);
+            h2 = int(rand()*65536);
+            h3 = int(rand()*65536);
+            h4 = int(rand()*65536);
+            # mỗi %04x là 4 hex digit, in thường
+            printf "%s/%d/%s:%04x:%04x:%04x:%04x\n", ip4, p, ip6, h1, h2, h3, h4;
+        }
+    }'
 }
 
 gen_iptables() {
@@ -46,9 +55,12 @@ timeouts 1 5 30 60 180 1800 15 60
 setgid 65535
 setuid 65535
 stacksize 6291456 
-flush
-users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
-$(awk -F "/" '{print "proxy -6 -n -p" $4 " -i" $3 " -e"$5"\n" \
+auth strong
+
+users usrproxy:CL:passwdproxy
+
+$(awk -F "/" '{print "auth strong\n" \
+"proxy -6 -n -a -p" $2 " -i" $1 " -e"$3"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
 }
