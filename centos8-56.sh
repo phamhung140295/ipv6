@@ -120,7 +120,7 @@ systemctl start NetworkManager.service
 # ifup ${main_interface}
 ip_address=""
 while [ -z "\$ip_address" ]; do
-  ip_address=\$(curl -4 -s icanhazip.com)
+  ip_address=\$(curl -6 -s icanhazip.com)
   if [ -z "\$ip_address" ]; then
     echo "Đang kiểm tra kết nối mạng..."
     sleep 5
